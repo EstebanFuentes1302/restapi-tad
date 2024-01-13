@@ -2,8 +2,10 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 
+console.log('Valor de process.env.PORT:', process.env.PORT);
+
 //Variables
-app.set('port', process.env.PORT || 3000); //Valida si la variable PORT existe, sino es 3000
+app.set('port', process.env.PORT); //Valida si la variable PORT existe, sino es 3000
 
 //Middlewares
 app.use(morgan('dev')); //Para imprimir las solicitudes en consola - formato "dev"
