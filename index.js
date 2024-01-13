@@ -2,9 +2,6 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 
-console.log('Valor de process.env.PORT:', process.env.DB_USER);
-console.log(process.env)
-
 //Variables
 app.set('port', process.env.PORT || 3000); //Valida si la variable PORT existe, sino es 3000
 
@@ -15,7 +12,7 @@ app.use(express.json()); //Soportar datos jkson
 
 
 //Routes
-app.use(require('src/routes/index.js'));
+app.use(require('./src/routes/index.js'));
 
 
 
