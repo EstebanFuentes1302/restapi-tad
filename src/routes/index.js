@@ -5,7 +5,8 @@ const router = Router();
 router.get('/test', (req, res) => {
     const data = {
         "name": "Esteban",
-        "role": 1
+        "role": 1,
+        "env": process.env.PORT
     }
     res.json(data);
 })
