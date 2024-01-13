@@ -15,7 +15,7 @@ app.use(express.json()); //Soportar datos jkson
 
 
 //Routes
-app.use(require('./src/routes/index.js'));
+app.use(require('src/routes/index.js'));
 
 
 
