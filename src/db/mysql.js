@@ -48,7 +48,6 @@ function one(table, dni){
     });
 }
 function insert(table, data){
-    // console.log(`INSERT INTO ${table} VALUES ${data.dni}, ${data.name}, ${data.user}, ${data.password}, ${data.role}`)
     return new Promise((resolve, reject) => {
         connection.query(`INSERT INTO ${table} VALUES ('${data.dni}', '${data.name}', '${data.user}', '${data.password}', ${data.role})`, (error, result) => {
             return error ? reject(error) : resolve(result);
