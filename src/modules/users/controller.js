@@ -10,6 +10,14 @@ function one(id){
     return db.one(table, id)
 }
 
+function insert(body){
+    return db.insert(table, body)
+}
+
+function update(body){
+    return db.update(table, body)
+}
+
 function erase(body){
     return db.erase(table, body)
 }
@@ -17,5 +25,7 @@ function erase(body){
 module.exports = {
     all,
     one,
-    erase
+    erase,
+    insert,
+    update
 }

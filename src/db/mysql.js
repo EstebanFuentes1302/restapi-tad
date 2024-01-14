@@ -39,17 +39,30 @@ function all(table){
     });
 }
 
-function one(table, id){
+function one(table, dni){
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM ${table} WHERE DNI = '${id}'`, (error, result) => {
+        connection.query(`SELECT * FROM ${table} WHERE DNI = '${dni}'`, (error, result) => {
             if(error) return reject(error);
             resolve(result)
         })
     });
 }
-
 function insert(table, data){
+    // console.log(`INSERT INTO ${table} VALUES ${data.dni}, ${data.name}, ${data.user}, ${data.password}, ${data.role}`)
+    return new Promise((resolve, reject) => {
+        connection.query(`INSERT INTO ${table} VALUES ('${data.dni}', '${data.name}', '${data.user}', '${data.password}', ${data.role})`, (error, result) => {
+            return error ? reject(error) : resolve(result);
+        })
+    });
+}
 
+function update(table, data){
+    console.log(`UPDATE ${table} SET Nombre = '${data.name}', User = '${data.user}', Contrasena = '${data.password}', Rol = ${data.role} WHERE DNI = '${data.dni}'`)
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE ${table} SET Nombre = '${data.name}', User = '${data.user}', Contrasena = '${data.password}', Rol = ${data.role} WHERE DNI = '${data.dni}'`, (error, result) => {
+            return error ? reject(error) : resolve(result);
+        })
+    });
 }
 
 function erase(table, data){
@@ -65,5 +78,6 @@ module.exports = {
     all,
     one,
     insert,
+    update,
     erase
 }

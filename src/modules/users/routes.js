@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const response = require('../../network/responses')
-const controller = require('./controller')
+const controller = require('./controller');
 
 router.get('/', all);
 router.get('/:id', one);
-
-router.put('/', erase)
+router.post('/', insert);
+router.put('/', update)
+router.delete('/:id', erase);
 
 async function all(req, res){
     const items = await controller.all();
@@ -23,10 +24,30 @@ async function one(req, res){
     }
 }
 
+async function insert(req, res){
+    try{
+        const items = await controller.insert(req.body);
+        response.success(req, res, 'Usuario Agregado Exitosamente', 200)
+    }catch(err){
+        console.log(err);
+        response.error(req, res, err, 500)
+    }
+}
+
+async function update(req, res){
+    try{
+        const items = await controller.update(req.body);
+        response.success(req, res, 'Usuario Actualizado Correctamente', 200)
+    }catch(err){
+        console.log(err);
+        response.error(req, res, items, 500)
+    }
+}
+
 async function erase(req, res){
     console.log(req.body)
     try{
-        const items = await controller.erase(req.body);
+        const items = await controller.erase(req.params.id);
         response.success(req, res, 'Usuario eliminado correctamente', 200)
     }catch(err){
         console.log(err);
