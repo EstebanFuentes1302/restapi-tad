@@ -14,6 +14,7 @@ function con(){
         if(err){
             console.log('db error: ', err);
         }else{
+
             console.log('Database Connection Success')
         }
     })
@@ -32,7 +33,7 @@ con();
 
 function all(table){
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM ${table}`, (error, result) => {
+        connection.query(`SELECT * FROM ${process.env.DB_NAME} ${table}`, (error, result) => {
             if(error) return reject(error);
             resolve(result)
         })
