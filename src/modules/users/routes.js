@@ -10,8 +10,9 @@ router.put('/', update)
 router.delete('/:id', erase);
 
 async function all(req, res){
-    const items = await controller.all();
-    response.success(req, res, items, 200);
+    response.success(req, res, 'Holaaa', 200);
+    // const items = await controller.all();
+    // response.success(req, res, items, 200);
 }
 
 async function one(req, res){

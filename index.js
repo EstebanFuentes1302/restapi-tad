@@ -16,7 +16,14 @@ app.use(express.json()); //Soportar datos jkson
 
 //Routes
 app.use('/api/users', users)
-
+app.use('/test', (req, res) => {
+    const data = {
+        "name": "Esteban",
+        "role": 1,
+        "env": process.env.PORT
+    }
+    res.json(data);
+})
 
 //Starting Server
 app.listen(app.get('port'), () => {
