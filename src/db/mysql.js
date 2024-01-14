@@ -33,9 +33,9 @@ con();
 
 function all(table){
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM ${process.env.DB_NAME} ${table}`, (error, result) => {
+        connection.query(`SELECT * FROM ${process.env.DB_NAME}.${table}`, (error, result) => {
             if(error) return reject(error);
-            resolve(result)
+            resolve(result);
         })
     });
 }
