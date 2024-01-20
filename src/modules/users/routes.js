@@ -26,6 +26,7 @@ async function one(req, res){
 
 async function insert(req, res){
     try{
+        console.log('Insert');
         const items = await controller.insert(req.body);
         response.success(req, res, 'Usuario Agregado Exitosamente', 200)
     }catch(err){
