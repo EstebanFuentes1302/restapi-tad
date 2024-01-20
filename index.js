@@ -4,6 +4,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 
 const users = require('./src/modules/users/routes')
+const products = require('./src/modules/products/routes')
 
 //Variables
 app.set('port', process.env.PORT || 3000); //Valida si la variable PORT existe, sino es 3000

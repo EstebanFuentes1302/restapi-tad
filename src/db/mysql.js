@@ -8,6 +8,7 @@ const dbconfig = {
 }
 
 let connection;
+
 function con(){
     connection = mysql.createConnection(dbconfig);
     connection.connect((err) => {
@@ -32,34 +33,58 @@ function con(){
 con();
 
 function all(table){
+    const query = `SELECT * FROM ${process.env.DB_NAME}.${table}`;
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM ${process.env.DB_NAME}.${table}`, (error, result) => {
+        connection.query(query, (error, result) => {
             if(error) return reject(error);
             resolve(result);
         })
     });
 }
 
-function one(table, dni){
+function one(table, id){
+    const query = `SELECT * FROM ${process.env.DB_NAME}.${table} WHERE id = '${id}'`;
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM ${table} WHERE DNI = '${dni}'`, (error, result) => {
+        connection.query(query, (error, result) => {
             if(error) return reject(error);
             resolve(result)
         })
     });
 }
 function insert(table, data){
+    const columnsAndValues = Object.entries(data).map(([key, value]) => {
+        if (typeof value === 'string') {
+            return `${key} = '${value}'`;
+        } else {
+            return `${key} = ${value}`;
+        }
+    }).join(', ');
+    
+    const query = `INSERT INTO ${process.env.DB_NAME}.${table} SET ${columnsAndValues};`;
+    console.log(query);
     return new Promise((resolve, reject) => {
-        connection.query(`INSERT INTO ${table} VALUES ('${data.dni}', '${data.name}', '${data.user}', '${data.password}', ${data.role})`, (error, result) => {
+        connection.query(query, (error, result) => {
             return error ? reject(error) : resolve(result);
         })
     });
 }
 
 function update(table, data){
-    console.log(`UPDATE ${table} SET Nombre = '${data.name}', User = '${data.user}', Contrasena = '${data.password}', Rol = ${data.role} WHERE DNI = '${data.dni}'`)
+    const columnsAndValues = Object.entries(data).map(([key, value]) => {
+        if (key !== 'id') {
+            if (typeof value === 'string') {
+                return `${key} = '${value}'`;
+            } else {
+                return `${key} = ${value}`;
+            }
+        }
+        return null;
+    }).filter(item => item !== null).join(', ');
+
+    const query = `UPDATE ${process.env.DB_NAME}.${table} SET ${columnsAndValues} WHERE id = ${data.id}` 
+
     return new Promise((resolve, reject) => {
-        connection.query(`UPDATE ${table} SET Nombre = '${data.name}', User = '${data.user}', Contrasena = '${data.password}', Rol = ${data.role} WHERE DNI = '${data.dni}'`, (error, result) => {
+        connection.query(query, (error, result) => {
             return error ? reject(error) : resolve(result);
         })
     });
@@ -68,7 +93,7 @@ function update(table, data){
 function erase(table, data){
     console.log(`DELETE FROM ${table} WHERE DNI = '${data.id}'`)
     return new Promise((resolve, reject) => {
-        connection.query(`DELETE FROM ${table} WHERE DNI = '${data.id}'`, (error, result) => {
+        connection.query(`DELETE FROM ${process.env.DB_NAME}.${table} WHERE id = '${data.id}'`, (error, result) => {
             return error ? reject(error) : resolve(result);
         })
     });
