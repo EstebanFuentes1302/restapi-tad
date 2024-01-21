@@ -99,6 +99,10 @@ function erase(table, data){
     });
 }
 
+function getAutoIncrement(table){
+    const query = `SHOW TABLE STATUS FROM ${process.env.DB_NAME} WHERE Name = '${table}';`
+}
+
 module.exports = {
     all,
     one,
