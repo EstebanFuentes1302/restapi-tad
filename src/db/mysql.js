@@ -90,10 +90,11 @@ function update(table, data){
     });
 }
 
-function erase(table, data){
-    console.log(`DELETE FROM ${table} WHERE DNI = '${data.id}'`)
+function erase(table, id){
+    const query = `DELETE FROM ${process.env.DB_NAME}.${table} WHERE id = '${id}'`;
+    console.log(query)
     return new Promise((resolve, reject) => {
-        connection.query(`DELETE FROM ${process.env.DB_NAME}.${table} WHERE id = '${data.id}'`, (error, result) => {
+        connection.query(query, (error, result) => {
             return error ? reject(error) : resolve(result);
         })
     });

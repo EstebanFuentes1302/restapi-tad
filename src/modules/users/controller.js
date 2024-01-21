@@ -18,8 +18,8 @@ function update(body){
     return db.update(table, body)
 }
 
-function erase(body){
-    return db.erase(table, body)
+function erase(id){
+    return db.erase(table, id)
 }
 
 module.exports = {

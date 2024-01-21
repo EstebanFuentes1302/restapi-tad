@@ -48,7 +48,7 @@ async function update(req, res){
 }
 
 async function erase(req, res){
-    console.log(req.body)
+    console.log(req.params.id)
     try{
         const items = await controller.erase(req.params.id);
         response.success(req, res, 'Usuario eliminado correctamente', 200)
